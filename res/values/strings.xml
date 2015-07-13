@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">LogiNextAssignment</string>
+    <string name="e_signature_text">E-Signature</string>
+    <string name="photo">Photo</string>
+
+</resources>
