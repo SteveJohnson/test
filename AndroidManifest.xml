@@ -7,19 +7,26 @@
         android:minSdkVersion="22"
         android:targetSdkVersion="22" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name="com.loginext.loginextassignment.LogiNextApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.loginext.loginextassignment.DashboardActivity"
+            android:name="com.loginext.loginextassignment.activity.DashboardActivity"
             android:label="@string/app_name"
             android:theme="@style/AppBaseTheme" >
             <intent-filter>
@@ -29,13 +36,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.loginext.loginextassignment.SignOnActivity"
+            android:name="com.loginext.loginextassignment.activity.SignOnActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppBaseTheme" />
+        <activity
+            android:name="com.loginext.loginextassignment.activity.ImagePageActivity"
             android:label="@string/app_name"
             android:theme="@style/AppBaseTheme" />
 
-        <service android:name="com.loginext.loginextassignment.PostImageService" />
+        <service android:name="com.loginext.loginextassignment.service.PostImageService" />
 
-        <receiver android:name="com.loginext.loginextassignment.PostImageReceiver" />
+        <receiver android:name="com.loginext.loginextassignment.receiver.PostImageReceiver" />
 
         <meta-data
             android:name="com.google.android.gms.version"

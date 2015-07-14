@@ -3,5 +3,8 @@
     <string name="app_name">LogiNextAssignment</string>
     <string name="e_signature_text">E-Signature</string>
     <string name="photo">Photo</string>
+    <string name="content_description">Content Description</string>
+    <string name="sample_action_bar_title">LogiNext</string>
+    <string name="upload">Upload</string>
 
 </resources>
