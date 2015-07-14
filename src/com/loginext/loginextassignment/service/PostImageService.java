@@ -48,7 +48,7 @@ public class PostImageService extends Service {
   }
 
   private String fullChirpPostUrl() {
-    return "http://166.62.37.208/AndroidFileUpload/fileUpload.php";
+    return "http://www.frozeniceplus.com/AndroidFileUpload/fileUpload.php";
   }
 
   @Override public void onDestroy() {
