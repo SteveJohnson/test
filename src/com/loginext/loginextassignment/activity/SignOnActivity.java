@@ -22,7 +22,6 @@ import com.github.gcacace.signaturepad.views.SignaturePad;
 import com.loginext.loginextassignment.R;
 
 public class SignOnActivity extends Activity {
-
   private SignaturePad mSignaturePad;
   private Button mClearButton;
   private Button mSaveButton;

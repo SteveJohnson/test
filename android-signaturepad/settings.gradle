@@ -1,3 +1,0 @@
-rootProject.name = 'signaturepad'
-
-include ':signature-pad', ':SignaturePad-Example'

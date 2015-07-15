@@ -1,6 +1,5 @@
 package com.loginext.loginextassignment.activity;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,7 +17,7 @@ import com.loginext.loginextassignment.common.AppConstants;
 import com.loginext.loginextassignment.common.Util;
 import com.loginext.loginextassignment.common.Util.OnDialogListener;
 
-public class DashboardActivity extends Activity implements OnClickListener, OnDialogListener{
+public class DashboardActivity extends LogiNextBaseActivity implements OnClickListener, OnDialogListener{
   private GoogleMap googleMap;
   private Button eSignature;
   private Button photo;
@@ -92,7 +91,7 @@ public class DashboardActivity extends Activity implements OnClickListener, OnDi
       startActivityForResult(intent, AppConstants.SAVE_SIGNATURE);
       break;
     case R.id.photo:
-      Util.createDialog(DashboardActivity.this, "Capture or Pic from Gallery", "Capture or Pic from Gallery", "Capture", "Pic", this);
+      Util.createDialog(DashboardActivity.this, "Capture or Pic from Gallery", null, "Capture", "Pic", this);
       break;
     default:
       Log.d(DashboardActivity.class.getSimpleName(), "No Click Listener for this type");

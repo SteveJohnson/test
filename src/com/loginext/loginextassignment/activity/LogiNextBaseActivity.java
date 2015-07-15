@@ -2,7 +2,7 @@ package com.loginext.loginextassignment.activity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.loginext.loginextassignment.R;
 
-public class LogiNextBaseActivity extends ActionBarActivity {
+public class LogiNextBaseActivity extends FragmentActivity {
   private Toolbar toolbar;
   protected ImageView mActionBarNavigationIconLeft;
   protected ImageView mActionBarNavigationIconRight;
@@ -62,7 +62,7 @@ public class LogiNextBaseActivity extends ActionBarActivity {
       throw new ClassCastException("Toolbar not set from the activity");
     }
 
-    setSupportActionBar(toolbar);
+    /*setSupportActionBar(toolbar);*/
 
     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
       toolbar.setContentInsetsAbsolute(0,0); 
