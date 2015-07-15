@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.loginext.loginextassignment.R;
 import com.loginext.loginextassignment.common.AppConstants;
+import com.loginext.loginextassignment.common.Util;
 import com.loginext.loginextassignment.service.PostImageService;
 
 public class ImagePageFragment extends Fragment implements OnImageViewTouchSingleTapListener, OnClickListener{
@@ -77,7 +78,7 @@ public class ImagePageFragment extends Fragment implements OnImageViewTouchSingl
   }
 
   private void setValuesToViews() {
-    String filePath = getRealPathFromURI(getActivity().getApplicationContext(), image, AppConstants.IMAGE_CODE);
+    String filePath = Util.getRealPathFromURI(getActivity().getApplicationContext(), image, AppConstants.IMAGE_CODE);
     mArticleImage.setDisplayType(DisplayType.FIT_TO_SCREEN);
     mArticleImage.setImageBitmap(BitmapFactory.decodeFile(filePath));  
     mArticleImage.setSingleTapListener(this);
@@ -133,29 +134,14 @@ public class ImagePageFragment extends Fragment implements OnImageViewTouchSingl
   }
 
   @Override public void onClick(View v) {
-    startUploadingService(image, AppConstants.IMAGE_CODE);
-  }
-
-  public void startUploadingService(Uri fileUri, int videoCode) {
-    String filePath = getRealPathFromURI(getActivity(), fileUri, videoCode);
-    Intent postChirpService = new Intent(getActivity(), PostImageService.class);
-    postChirpService.putExtra(AppConstants.EXTRA_KEY_FILE_PATH, filePath);
-    getActivity().startService(postChirpService);
-  }
-
-  public String getRealPathFromURI(Context context, Uri contentUri, int fileCode) {
-    Cursor cursor = null;
-    try {
-      String[] proj = { MediaStore.Images.Media.DATA };
-      cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
-      int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-      cursor.moveToFirst();
-      return cursor.getString(column_index);
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
+    if(Util.isNetworkAvailable()) {
+      Util.startUploadingService(image, AppConstants.IMAGE_CODE);
+      Util.saveBoolean(AppConstants.STORE_FORWARD, false);
+    } else {
+      Util.saveBoolean(AppConstants.STORE_FORWARD, true);
+      Util.saveString(AppConstants.STORE, String.valueOf(image));
     }
+
   }
 
 }

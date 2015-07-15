@@ -14,26 +14,34 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.loginext.loginextassignment.LogiNextApplication;
+import com.loginext.loginextassignment.R;
 import com.loginext.loginextassignment.common.AppConstants;
 import com.loginext.loginextassignment.receiver.PostImageReceiver;
 import com.parse.entity.mime.HttpMultipartMode;
 import com.parse.entity.mime.MultipartEntity;
 import com.parse.entity.mime.content.FileBody;
 
-@SuppressWarnings("deprecation")
 public class PostImageService extends Service {
   private long totalSize = 0;
+  private int uploadProgress = 0;
+  private NotificationManager mNotifyManager;
+  private NotificationCompat.Builder mBuilder;
 
   @Override public int onStartCommand(Intent intent, int flags, int startId) {
     if (intent != null) {
       String filePath = intent.getStringExtra(AppConstants.EXTRA_KEY_FILE_PATH);
       sendFile(filePath);
+      showNotification();
     }
 
     return super.onStartCommand(intent, flags, startId);
@@ -71,7 +79,23 @@ public class PostImageService extends Service {
     }
 
     @Override protected void onProgressUpdate(Integer... progress) {
-      Log.d(PostImageService.class.getSimpleName(), "Post Image Progress : " + progress[0]);
+      uploadProgress = progress[0];
+      
+      if(uploadProgress % 10 != 0) {
+        return;
+      }
+      
+      Log.d(PostImageService.class.getSimpleName(), "Post Image Progress : " + uploadProgress);
+      if(uploadProgress == 100) {
+        mBuilder.setContentText("Upload complete").setProgress(0,0,false);
+        mNotifyManager.notify(AppConstants.NOTIFICATION_ID, mBuilder.build());
+      } else {
+        mBuilder.setProgress(100, uploadProgress, false);
+        mNotifyManager.notify(AppConstants.NOTIFICATION_ID, mBuilder.build());  
+      }
+      
+      
+      
     }
 
     @Override protected String doInBackground(Void... params) {
@@ -173,5 +197,11 @@ public class PostImageService extends Service {
 
   public static interface ProgressListener {
     void transferred(long num);
+  }
+
+  private void showNotification() {
+    Context context = LogiNextApplication.getInstance().getApplicationContext();
+    mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    mBuilder = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.logi_next).setContentTitle("Picture Upload").setContentText("Upload in progress").setAutoCancel(true);
   }
 }
